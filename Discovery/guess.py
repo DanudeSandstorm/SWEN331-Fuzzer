@@ -6,9 +6,16 @@ class guess(object):
     guessThis = []
     goodGuess = []
 
-    def __init__(self):
-        self.guessThis = ["admin","employee","private","dashboard","secure","profile",
-                          "users","user","password","applications","phpinfo"]
+    def __init__(self, base_url, file_name):
+        self.base_url = base_url
+        #self.guessThis = ["about","admin","applications","archives","custom","dashboard",
+         #                 "employee","group","groups","index","login","password","passwords","people",
+          #                "photos","phpinfo","profile","private","register","secure","security","secret",
+           #               "tags","unlinked","upload","uploads","users","user"]
+        with open(file_name) as file:
+            for word in file:
+                self.guessThis.append(word.replace(' ','')[:-1])
+            print(self.guessThis)
 
     def startToGuess(self):
         boolTest = False
@@ -29,7 +36,7 @@ class guess(object):
 
 
 if __name__ == "__main__":
-    newGuess = guess()
+    newGuess = guess("http://127.0.0.1/","common_words.txt")
     newGuess.startToGuess()
 
 
