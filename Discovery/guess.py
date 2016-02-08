@@ -26,6 +26,7 @@ class guess(object):
             php_guess = self.base_url + g + ".php"
             if requests.get(php_guess).content != requests.get(self.bad_url).content:
                 self.goodGuess.append(g+".php")
+                print(requests.get(php_guess).content)
             jsp_guess = self.base_url + g + ".jsp"
             if requests.get(jsp_guess).content != requests.get(self.bad_url).content:
                 self.goodGuess.append(g+".jsp")
