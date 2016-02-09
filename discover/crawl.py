@@ -13,7 +13,7 @@ class crawl(object):
 
 
     def findHref(self, url):
-        url_content = requests.get(url).content
+        self.url_content = requests.get(url).content
         indexList = []
         substring = 'href="/'
         currIndex = 0
@@ -23,30 +23,27 @@ class crawl(object):
         return indexList
 
     def findUrls(self, url):
-        newUrl=""
         if url in self.keeper_list:
-            newUrl = self.url_list.pop(0)
-            self.findUrls(newUrl)
+            if len(self.url_list) > 0:
+                newUrl = self.url_list.pop(0)
+                self.findUrls(newUrl)
+            else:
+                return self.keeper_list
         else:
             self.keeper_list.append(url)
             indexList = self.findHref(url)
-            print(indexList)
             for index in indexList[:-1]:
                 urlExt = ""
-                charIndex = index+6
+                charIndex = index+7
                 char = self.url_content[charIndex]
                 while char != '"':
                     urlExt += char
                     charIndex += 1
                     char = self.url_content[charIndex]
-                self.url_list.append(url+urlExt)
-            newUrl = self.url_list.pop(0)
-            print("newURL: " + newUrl)
-            print(self.url_list[:-1])
-            #self.findUrls(newUrl)
+                self.url_list.append(self.base_url + urlExt)
+            if len(self.url_list) > 0:
+                newUrl = self.url_list.pop(0)
+                self.findUrls(newUrl)
+            else:
+                return self.keeper_list
 
-
-if __name__ == "__main__":
-    newGuess = crawl("http://127.0.0.1/")
-    #print(newGuess.findHref())
-    newGuess.findUrls(newGuess.base_url)
