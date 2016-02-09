@@ -23,8 +23,9 @@ class crawl(object):
         return indexList
 
     def findUrls(self, url):
+        newUrl=""
         if url in self.keeper_list:
-            newUrl = self.base_url + self.url_list.pop()
+            newUrl = self.url_list.pop(0)
             self.findUrls(newUrl)
         else:
             self.keeper_list.append(url)
@@ -39,10 +40,10 @@ class crawl(object):
                     charIndex += 1
                     char = self.url_content[charIndex]
                 self.url_list.append(url+urlExt)
-            newUrl = self.base_url + self.url_list.pop()
-            print(newUrl)
-            #print(self.url_list[:-1])
-            self.findUrls(newUrl)
+            newUrl = self.url_list.pop(0)
+            print("newURL: " + newUrl)
+            print(self.url_list[:-1])
+            #self.findUrls(newUrl)
 
 
 if __name__ == "__main__":

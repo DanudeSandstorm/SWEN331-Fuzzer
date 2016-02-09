@@ -20,6 +20,8 @@ register
 secure
 security
 secret
+stylesheet
+stylesheets
 tags
 unlinked
 upload
