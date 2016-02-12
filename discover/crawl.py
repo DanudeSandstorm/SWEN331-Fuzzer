@@ -1,6 +1,6 @@
 import requests
 
-class crawl(object):
+class Crawl(object):
     base_url = ""
     curr_url = ""
     url_content = ""
