@@ -1,19 +1,22 @@
-import requests
+import mechanize
 
 class Crawl(object):
     base_url = ""
     curr_url = ""
     url_content = ""
+    browser = mechanize.Browser()
     url_list = []
     keeper_list = []
 
-    def __init__(self, base_url):
+    def __init__(self, browser, base_url):
+        self.browser = browser
         self.base_url = base_url
-        self.url_content = requests.get(base_url).content
+        self.url_content = self.browser.open(self.base_url).read()
+
 
 
     def findHref(self, url):
-        self.url_content = requests.get(url).content
+        self.url_content = self.browser.open(self.base_url).read()
         indexList = []
         substring = 'href="/'
         currIndex = 0
