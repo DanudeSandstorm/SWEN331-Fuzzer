@@ -1,5 +1,3 @@
-import mechanize
-
 class Crawl(object):
     substring = 'href="'
     base_url = ''

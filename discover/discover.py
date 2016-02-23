@@ -21,37 +21,11 @@ class Discover(object):
         browser.form['password'] = 'password'
         browser.submit()
 
-        # s = requests.session()
-        # r = s.get(base_url, verify = False)
-        # print r.cookies
-        # matchme = 'meta content="(.*)" name="csrf-token" /'
-        # csrf = re.search(matchme, str(r.text))
-        # print csrf
+        guess = Guess(browser, base_url, path + common_words)
+        guessed_urls = guess.startToGuess()
+        print guessed_urls
 
-        # payload = {
-        #     'username': 'admin',
-        #     'password': 'password',
-        #     'authenticity_token' : csrf.group(1),
-        #     '_portal_session' : r.cookies["_portal_session"]
-        # }
-
-        # r = s.post(url,data=payload,verify = False)
-        # print r.text
-
-        # payload = {
-        #     'username': 'admin',
-        #     'password': 'pssword',
-        # }
-
-        # with requests.session() as c:
-        #     print c.post(base_url + 'login.php', headers=user_agent, data=payload)
-        #     response = c.get(base_url + 'index.php', headers=user_agent)
-        #     print(response.text)
-
-        #guess = Guess(browser, base_url, path+common_words)
         crawl = Crawl(browser, base_url)
-
-        #print newGuess.startToGuess()
         crawled_urls = crawl.find_urls()
         print crawled_urls
 

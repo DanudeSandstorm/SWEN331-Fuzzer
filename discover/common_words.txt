@@ -1,3 +1,4 @@
+index
 about
 admin
 applications
