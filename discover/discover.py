@@ -1,6 +1,8 @@
 import os
 import sys
 import mechanize
+
+from discover.form_params import form_params
 from guess import Guess
 from crawl import Crawl
 from parse_url import ParseURL
@@ -46,6 +48,15 @@ class Discover(object):
         urlInputMap = urlParser.parse(found_urls)
         print self.makeAString(urlInputMap)
 
+    def findFormParams(self, url):
+        browser = mechanize.Browser()
+        browser.open(url)
+        forms = []
+        for f in browser.forms():
+            form = form_params(f)
+            forms.append(form)
+        return forms
+
     def fillCookieJar(self, browser):
         cookieJar =  "\nCookies:\n"
         count = 1
@@ -61,6 +72,10 @@ class Discover(object):
             sexyString += str(count) + '. ' + url + " "
             if urlInputMap[url] != "":
                 sexyString += "\n       Input: " + urlInputMap[url]
-            sexyString += '\n'
+            #comment out the next 4 lines to run w/o the forms printoutCom
+            sexyString += "\n"
+            sexyString += "       Form(s): "
+            for form in self.findFormParams(url):
+                sexyString += "              " + form.toString()
             count += 1
         return sexyString
