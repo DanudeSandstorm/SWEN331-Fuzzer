@@ -39,7 +39,7 @@ class Crawl(object):
                         urlExt = urlExt.encode('ascii', 'ignore')
                         urlExt = urlExt.split('%22', 1)[0]
                         if urlExt.startswith('/'):
-                            urlExt = urlExt[:1]
+                            urlExt = urlExt[1:]
                         if urlExt.endswith('.'):
                             urlExt = urlExt[:-1]
 
