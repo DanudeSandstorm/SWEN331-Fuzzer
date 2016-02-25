@@ -4,7 +4,6 @@ class ParseURL(object):
         pass
 
     def parse(self, urls):
-        #TODO map the urls to params
         urlInputMap = {}
         for url in urls:
             input = url.partition('?')[-1].rpartition('=')[0]
@@ -20,5 +19,5 @@ class ParseURL(object):
                         isInput = True
                         newInput += " and "
                 input = newInput
-            urlInputMap[url] = input
+            urlInputMap.setdefault(url, input)
         return urlInputMap
