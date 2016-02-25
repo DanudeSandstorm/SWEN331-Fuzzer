@@ -17,13 +17,14 @@ class Discover(object):
             base_url = base_url + '/'
 
         #Login
-        print 'Loggin in'
+        print 'Logging in'
         browser = mechanize.Browser()
         browser.open(base_url)
         browser.select_form(nr=0)
         browser.form['username'] = username
         browser.form['password'] = password
         browser.submit()
+        #how to find cookies....  browser._ua_handlers['_cookies'].cookiejar
 
         crawler = Crawl(browser, base_url)
         print 'Crawling for urls...'
@@ -36,7 +37,21 @@ class Discover(object):
         # print guessed_urls
 
         found_urls = list(set(crawled_urls) - set(guessed_urls))
-        print found_urls
+
+        urlParser = ParseURL()
+        urlInputMap = urlParser.parse(found_urls)
+        print self.makeAString(urlInputMap)
+
+    def makeAString(self, urlInputMap):
+        count = 1
+        sexyString = ""
+        for url in urlInputMap:
+            sexyString += str(count) + '. ' + url + " "
+            if urlInputMap[url] != "":
+                sexyString += "\n       Input: " + urlInputMap[url]
+            sexyString += '\n'
+            count += 1
+        return sexyString
 
         #TODO
         # Return map url to its paramaters
