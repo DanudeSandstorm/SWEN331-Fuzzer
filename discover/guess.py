@@ -3,13 +3,11 @@ import sys
 
 class Guess(object):
     browser = None
-    base_url = None
     guesses = []
     extentions = ['/', '.php', '.jsp', '.html']
 
-    def __init__(self, browser, base_url, file_name):
+    def __init__(self, browser, file_name):
         self.browser = browser
-        self.base_url = base_url
         try:
             with open(file_name) as file:
                 for word in file:

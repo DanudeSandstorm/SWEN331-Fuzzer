@@ -13,6 +13,9 @@ class Discover(object):
         base_url = args.url
         common_words = os.path.join(path, args.common_words)
 
+        if not base_url.endswith('/'):
+            base_url = base_url + '/'
+
         #Login
         browser = mechanize.Browser()
         browser.open(base_url)
@@ -26,12 +29,12 @@ class Discover(object):
         print crawled_urls
 
         #TODO use crawled_urls as a reference for guessing
-        guesser = Guess(browser, base_url, common_words)
-        guessed_urls = guesser.guess(crawled_urls)
-        print guessed_urls
+        # guesser = Guess(browser, common_words)
+        # guessed_urls = guesser.guess(crawled_urls)
+        # print guessed_urls
 
         #TODO
         # Return map url to its paramaters
-        parser = ParseURL()
-        url_params = parser.parse(urls)
-        print url_params
+        # parser = ParseURL()
+        # url_params = parser.parse(urls)
+        # print url_params
