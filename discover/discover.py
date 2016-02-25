@@ -28,7 +28,6 @@ class Discover(object):
         crawled_urls = crawler.crawl()
         print crawled_urls
 
-        #TODO use crawled_urls as a reference for guessing
         # guesser = Guess(browser, common_words)
         # guessed_urls = guesser.guess(crawled_urls)
         # print guessed_urls

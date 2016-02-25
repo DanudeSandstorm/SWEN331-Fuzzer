@@ -1,4 +1,5 @@
 import mechanize
+from bs4 import BeautifulSoup
 
 class Crawl(object):
     substring = 'href="'
@@ -12,14 +13,6 @@ class Crawl(object):
         self.base_url = base_url
         self.url_list.append(base_url)
 
-    def find_hrefs(self, url_content):
-        indexList = []
-        currIndex = 0
-        while currIndex != -1:
-            currIndex = url_content.find(self.substring, currIndex+1)
-            indexList.append(currIndex)
-        return indexList
-
     def crawl(self):
         if len(self.url_list) <= 0:
             return self.keeper_list
@@ -32,27 +25,22 @@ class Crawl(object):
             self.keeper_list.append(url)
             try:
                 url_content = self.browser.open(url).read()
-                indexList = self.find_hrefs(url_content)
-                
-                for index in indexList[:-1]:
-                    urlExt = ""
-                    charIndex = index + len(self.substring)
-                    char = url_content[charIndex]
-                    
-                    while char != '"':
-                        urlExt += char
-                        charIndex += 1
-                        char = url_content[charIndex]
+                soup = BeautifulSoup(url_content, 'html.parser')
 
+                for link in soup.find_all('a'):
+                    urlExt = link.get('href')
                     if (
+                        urlExt != None and
                         'http' not in urlExt and
                         not urlExt.startswith('../')
                     ):
+                        urlExt = urlExt.encode('ascii', 'ignore')
                         if urlExt.startswith('/'):
                             urlExt = urlExt[:1]
                         if urlExt.endswith('.'):
                             urlExt = urlExt[:-1]
                         self.url_list.append(self.base_url + urlExt)
+
             except mechanize.HTTPError as e:
                 pass
             
