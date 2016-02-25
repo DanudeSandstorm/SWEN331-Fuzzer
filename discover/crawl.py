@@ -43,9 +43,16 @@ class Crawl(object):
                         if urlExt.endswith('.'):
                             urlExt = urlExt[:-1]
 
+                        if '/' in urlExt:
+                            moreExt = urlExt.split('/')[:-1]
+                            moreExt = [s + '/' for s in moreExt]
+                            for i in xrange(len(moreExt)):
+                                self.url_list.append(self.base_url + ''.join(moreExt[0:i]))
+
                         self.url_list.append(self.base_url + urlExt)
             except mechanize.HTTPError as e:
                 pass
-                
+
         return self.crawl()
+        
 
