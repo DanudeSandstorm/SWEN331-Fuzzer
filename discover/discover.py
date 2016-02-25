@@ -29,7 +29,8 @@ class Discover(object):
         except:
             print 'Unable to log in. Try again'
             sys.exit()
-        #how to find cookies....  browser._ua_handlers['_cookies'].cookiejar
+
+        print self.fillCookieJar(browser)
 
         crawler = Crawl(browser, base_url)
         print 'Crawling for urls...'
@@ -44,6 +45,14 @@ class Discover(object):
         urlParser = ParseURL()
         urlInputMap = urlParser.parse(found_urls)
         print self.makeAString(urlInputMap)
+
+    def fillCookieJar(self, browser):
+        cookieJar =  "\nCookies:\n"
+        count = 1
+        for cookie in browser._ua_handlers['_cookies'].cookiejar:
+            cookieJar += str(count) + '. ' + str(cookie) + '\n'
+            count += 1
+        return cookieJar
 
     def makeAString(self, urlInputMap):
         count = 1
