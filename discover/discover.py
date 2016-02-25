@@ -1,4 +1,5 @@
 import os
+import sys
 import mechanize
 from guess import Guess
 from crawl import Crawl
@@ -17,24 +18,26 @@ class Discover(object):
             base_url = base_url + '/'
 
         #Login
-        print 'Logging in'
+        print 'Logging in...'
         browser = mechanize.Browser()
-        browser.open(base_url)
-        browser.select_form(nr=0)
-        browser.form['username'] = username
-        browser.form['password'] = password
-        browser.submit()
+        try:
+            browser.open(base_url)
+            browser.select_form(nr=0)
+            browser.form['username'] = username
+            browser.form['password'] = password
+            browser.submit()
+        except:
+            print 'Unable to log in. Try again'
+            sys.exit()
         #how to find cookies....  browser._ua_handlers['_cookies'].cookiejar
 
         crawler = Crawl(browser, base_url)
         print 'Crawling for urls...'
         crawled_urls = crawler.crawl()
-        # print crawled_urls
 
         guesser = Guess(browser, common_words)
         print 'Guessing urls...'
         guessed_urls = guesser.guess(crawled_urls)
-        # print guessed_urls
 
         found_urls = list(set(crawled_urls) - set(guessed_urls))
 
@@ -52,9 +55,3 @@ class Discover(object):
             sexyString += '\n'
             count += 1
         return sexyString
-
-        #TODO
-        # Return map url to its paramaters
-        # parser = ParseURL()
-        # url_params = parser.parse(found_urls)
-        # print url_params
