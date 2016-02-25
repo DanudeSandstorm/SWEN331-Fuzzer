@@ -1,5 +1,9 @@
-class parse_url(object):
+class ParseURL(object):
 
-    def parseThis(self, url):
-        return url.partition('?')[-1].rpartition('=')[0]
+    def __init__(self):
+        pass
 
+    def parse(self, urls):
+        #TODO map the urls to params
+        url.partition('?')[-1].rpartition('=')[0]
+        return {}

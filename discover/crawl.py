@@ -18,7 +18,7 @@ class Crawl(object):
             indexList.append(currIndex)
         return indexList
 
-    def find_urls(self):
+    def crawl(self):
         if len(self.url_list) <= 0:
             return self.keeper_list
 
@@ -42,5 +42,5 @@ class Crawl(object):
                 if 'http' not in urlExt:
                     self.url_list.append(self.base_url + urlExt)
             
-        return self.find_urls()
+        return self.crawl()
 

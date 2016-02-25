@@ -1,4 +1,5 @@
 import mechanize
+import sys
 
 class Guess(object):
     browser = None
@@ -9,11 +10,15 @@ class Guess(object):
     def __init__(self, browser, base_url, file_name):
         self.browser = browser
         self.base_url = base_url
-        with open(file_name) as file:
-            for word in file:
-                self.guesses.append(word.replace(' ','')[:-1])
+        try:
+            with open(file_name) as file:
+                for word in file:
+                    self.guesses.append(word.replace(' ','')[:-1])
+        except:
+            print 'No such file:' + file_name
+            sys.exit()
 
-    def startToGuess(self):
+    def guess(self, urls):
         goodGuess = []
         for g in self.guesses:
             for ext in self.extentions:

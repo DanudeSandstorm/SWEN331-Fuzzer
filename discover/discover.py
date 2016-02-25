@@ -2,30 +2,36 @@ import os
 import mechanize
 from guess import Guess
 from crawl import Crawl
+from parse_url import ParseURL
 
 class Discover(object):
 
     def __init__(self, args):
-        #base_url = args.url
-        #common_words = args.common_words
-        #temp variables
-        base_url = "http://127.0.0.1/dvwa/"
-        common_words = "\\discover\\common_words.txt"
         path = os.getcwd()
+        username = 'admin'
+        password = 'password'
+        base_url = args.url
+        common_words = os.path.join(path, args.common_words)
 
         #Login
         browser = mechanize.Browser()
         browser.open(base_url)
         browser.select_form(nr=0)
-        browser.form['username'] = 'admin'
-        browser.form['password'] = 'password'
+        browser.form['username'] = username
+        browser.form['password'] = password
         browser.submit()
 
-        guess = Guess(browser, base_url, path + common_words)
-        guessed_urls = guess.startToGuess()
-        print guessed_urls
-
-        crawl = Crawl(browser, base_url)
-        crawled_urls = crawl.find_urls()
+        crawler = Crawl(browser, base_url)
+        crawled_urls = crawler.crawl()
         print crawled_urls
 
+        #TODO use crawled_urls as a reference for guessing
+        guesser = Guess(browser, base_url, common_words)
+        guessed_urls = guesser.guess(crawled_urls)
+        print guessed_urls
+
+        #TODO
+        # Return map url to its paramaters
+        parser = ParseURL()
+        url_params = parser.parse(urls)
+        print url_params
