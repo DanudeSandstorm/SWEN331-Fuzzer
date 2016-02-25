@@ -17,6 +17,7 @@ class Discover(object):
             base_url = base_url + '/'
 
         #Login
+        print 'Loggin in'
         browser = mechanize.Browser()
         browser.open(base_url)
         browser.select_form(nr=0)
@@ -25,16 +26,16 @@ class Discover(object):
         browser.submit()
 
         crawler = Crawl(browser, base_url)
-        print 'Crawling for Urls...'
+        print 'Crawling for urls...'
         crawled_urls = crawler.crawl()
         # print crawled_urls
 
         guesser = Guess(browser, common_words)
-        print 'Guessing Urls...'
+        print 'Guessing urls...'
         guessed_urls = guesser.guess(crawled_urls)
         # print guessed_urls
 
-        found_urls + list(set(crawled_urls) - set(guessed_urls))
+        found_urls = list(set(crawled_urls) - set(guessed_urls))
         print found_urls
 
         #TODO
