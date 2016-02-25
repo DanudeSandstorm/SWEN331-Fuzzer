@@ -29,20 +29,23 @@ class Crawl(object):
 
                 for link in soup.find_all('a'):
                     urlExt = link.get('href')
+
                     if (
                         urlExt != None and
                         'http' not in urlExt and
                         not urlExt.startswith('../')
                     ):
+                        #Formatting
                         urlExt = urlExt.encode('ascii', 'ignore')
+                        urlExt = urlExt.split('%22', 1)[0]
                         if urlExt.startswith('/'):
                             urlExt = urlExt[:1]
                         if urlExt.endswith('.'):
                             urlExt = urlExt[:-1]
-                        self.url_list.append(self.base_url + urlExt)
 
+                        self.url_list.append(self.base_url + urlExt)
             except mechanize.HTTPError as e:
                 pass
-            
+                
         return self.crawl()
 
