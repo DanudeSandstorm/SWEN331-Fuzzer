@@ -28,11 +28,14 @@ class Discover(object):
             browser.form['username'] = username
             browser.form['password'] = password
             browser.submit()
+        except mechanize.FormNotFoundError:
+            pass
         except:
-            print 'Unable to log in. Try again'
+            print 'Website not found. Check to see if url is valid.'
             sys.exit()
 
-        print self.fillCookieJar(browser)
+        print 'Collecting cookies...'
+        cookies = self.fillCookieJar(browser)
 
         crawler = Crawl(browser, base_url)
         print 'Crawling for urls...'
@@ -45,7 +48,11 @@ class Discover(object):
         found_urls = list(set(crawled_urls) - set(guessed_urls))
 
         urlParser = ParseURL()
+        print 'Parsing urls for inputs...'
         urlInputMap = urlParser.parse(found_urls)
+
+        print cookies
+
         print self.makeAString(urlInputMap)
 
     def findFormParams(self, url):
@@ -69,9 +76,10 @@ class Discover(object):
         count = 1
         sexyString = ""
         for url in urlInputMap:
-            sexyString += str(count) + '. ' + url + " "
-            if urlInputMap[url] != "":
-                sexyString += "\n       Input: " + urlInputMap[url]
+            sexyString += str(count) + '. ' + url + '\n'
+            for param in urlInputMap[url]:
+                if param != "":
+                    sexyString += "\tInput: " + param + '\n'
             #comment out the next 4 lines to run w/o the forms printoutCom
             sexyString += "\n"
             sexyString += "       Form(s): "
