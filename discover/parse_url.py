@@ -19,5 +19,5 @@ class ParseURL(object):
                         isInput = True
                         newInput += " and "
                 input = newInput
-            urlInputMap.setdefault(url, input)
+            urlInputMap[url] = input
         return urlInputMap

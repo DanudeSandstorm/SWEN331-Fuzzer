@@ -16,9 +16,9 @@ def main():
     # discover parser
     d_parser = subparsers.add_parser('discover', usage=msg('discover'), help='Outputs a comprehensive, human-readable list of all discovered inputs to the system.\nTechniques include both crawling and guessing.')
     d_parser._optionals.title = 'additional arguments'
-    # d_parser.add_argument('url', type=str)
+    d_parser.add_argument('url', type=str)
     d_parser.add_argument('--custom-auth', type=str, required=False, metavar='', help='Signal that the fuzzer should use hard-coded authentication for a specific application (e.g. dvwa).')
-    # d_parser.add_argument('--common-words', type=str, required=True, metavar='', help='REQUIRED Newline-delimited file of common words to be used in page guessing and input guessing.')
+    d_parser.add_argument('--common-words', type=str, required=True, metavar='', help='REQUIRED Newline-delimited file of common words to be used in page guessing and input guessing.')
     
     # test parser
     t_parser = subparsers.add_parser('test', usage=msg('test'), help='Discovers all inputs, then attempts a list of exploit vectors on those inputs.\nReports potential vulnerabilities.')
@@ -34,9 +34,6 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'discover':
-        # Temp variables
-        args.url = 'http://127.0.0.1/dvwa'
-        args.common_words = "discover\\common_words.txt"
         Discover(args)
     elif args.command == 'test':
         Test(args)

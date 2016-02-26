@@ -22,9 +22,9 @@ class Crawl(object):
             url not in self.keeper_list and
             not url.endswith('logout.php')
         ):
-            self.keeper_list.append(url)
             try:
                 url_content = self.browser.open(url).read()
+                self.keeper_list.append(url)
                 soup = BeautifulSoup(url_content, 'html.parser')
 
                 for link in soup.find_all('a'):
