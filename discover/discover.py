@@ -9,6 +9,8 @@ from parse_url import ParseURL
 
 class Discover(object):
 
+    browser = None
+
     def __init__(self, args):
         path = os.getcwd()
         username = 'admin'
@@ -21,13 +23,13 @@ class Discover(object):
 
         #Login
         print 'Logging in...'
-        browser = mechanize.Browser()
+        self.browser = mechanize.Browser()
         try:
-            browser.open(base_url)
-            browser.select_form(nr=0)
-            browser.form['username'] = username
-            browser.form['password'] = password
-            browser.submit()
+            self.browser.open(base_url)
+            self.browser.select_form(nr=0)
+            self.browser.form['username'] = username
+            self.browser.form['password'] = password
+            self.browser.submit()
         except mechanize.FormNotFoundError:
             pass
         except:
@@ -35,13 +37,13 @@ class Discover(object):
             sys.exit()
 
         print 'Collecting cookies...'
-        cookies = self.fillCookieJar(browser)
+        cookies = self.fillCookieJar(self.browser)
 
-        crawler = Crawl(browser, base_url)
+        crawler = Crawl(self.browser, base_url)
         print 'Crawling for urls...'
         crawled_urls = crawler.crawl()
 
-        guesser = Guess(browser, common_words)
+        guesser = Guess(self.browser, common_words)
         print 'Guessing urls...'
         guessed_urls = guesser.guess(crawled_urls)
 
@@ -56,18 +58,17 @@ class Discover(object):
         print self.makeAString(urlInputMap)
 
     def findFormParams(self, url):
-        browser = mechanize.Browser()
-        browser.open(url)
+        self.browser.open(url)
         forms = []
-        for f in browser.forms():
+        for f in self.browser.forms():
             form = form_params(f)
             forms.append(form)
         return forms
 
-    def fillCookieJar(self, browser):
+    def fillCookieJar(self, self.browser):
         cookieJar =  "\nCookies:\n"
         count = 1
-        for cookie in browser._ua_handlers['_cookies'].cookiejar:
+        for cookie in self.browser._ua_handlers['_cookies'].cookiejar:
             cookieJar += str(count) + '. ' + str(cookie) + '\n'
             count += 1
         return cookieJar
@@ -84,6 +85,6 @@ class Discover(object):
             sexyString += "\n"
             sexyString += "       Form(s): "
             for form in self.findFormParams(url):
-                sexyString += "              " + form.toString()
+                sexyString += "\t\t" + form.toString()
             count += 1
         return sexyString
