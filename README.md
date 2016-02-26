@@ -1,2 +1,27 @@
 # SWEN331-Fuzzer
 A Fuzzer for swen 331
+
+Modules to install:
+-Python 2.7.11 (or any 2.7 version)
+-pip (to install dependencies)
+-mechanize
+```shell
+pip install mechanize
+```
+-beautifulsoup4
+```shell
+pip install beautifulsoup4
+```
+
+Preconditions...
+  1. In the terminal cd into the projects directory
+  2. Enter "python fuzz.py discover -h" to see all available options
+
+To run the fuzzer on DVWA:
+  1. In step 2 replace [path/file_name] with the path and file name that you wish to use for guessing URLs
+  2. Enter "python fuzz.py discover 'http://127.0.0.1/dvwa/' --common-words [path/file_name] --custom-auth 'dvwa'"
+
+To run the fuzzer on bWapp:
+  1. In step 2 replace [path/file_name] with the path and file name that you wish to use for guessing URLs
+  2. Enter "python fuzz.py discover 'http://127.0.0.1/bWapp/' --common-words [path/file_name] --custom-auth 'bwapp'"
+
