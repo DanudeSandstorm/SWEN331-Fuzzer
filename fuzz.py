@@ -1,4 +1,6 @@
 import argparse
+import mechanize
+import sys
 from discover.discover import Discover
 from test.test import Test
 
@@ -33,10 +35,35 @@ def main():
 
     args = parser.parse_args()
 
+    if not args.url.endswith('/'):
+        args.url = args.url + '/'
+
+    #Instantiate browser session
+    browser = mechanize.Browser()
+
+    #Login
+    if args.custom_auth != None:
+        print 'Attempting to log in...'
+        try:
+            browser.open(args.url)
+            browser.select_form(nr=0)
+            if args.custom_auth.lower() == 'dvwa':
+                browser.form['username'] = 'admin'
+                browser.form['password'] = 'password'
+            elif args.custom_auth.lower() == 'bwapp':
+                browser.form['login'] = 'bee'
+                browser.form['password'] = 'bug'
+            browser.submit()
+        except mechanize.FormNotFoundError:
+            pass
+        except:
+            print 'Website not found. Check to see if url is valid.'
+            sys.exit()    
+
     if args.command == 'discover':
-        Discover(args)
+        Discover(args, browser)
     elif args.command == 'test':
-        Test(args)
+        Test(args, browser)
 
 if __name__ == '__main__':
     main()
