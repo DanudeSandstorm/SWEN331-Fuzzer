@@ -18,3 +18,9 @@ class Response(object):
     def responseType(self, url):
         response = self.browser.open(url)
         return response.code
+
+if __name__ == '__main__':
+    url = ""
+    resObj = Response(mechanize.Browser(), 500)
+    print(resObj.responseTimer(url))
+    print(resObj.responseType(url))
