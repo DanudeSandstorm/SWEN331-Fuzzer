@@ -19,5 +19,5 @@ class Form(object):
                 iLookGood += '\t\t' + str(control) + '\n'
                 if control.type == "select":
                     for item in control.items:
-                        print " name=%s values=%s" % (item.name, str([label.text  for label in item.get_labels()]))
+                        print " name=%s values=%s" % (item.name, str([label.text for label in item.get_labels()]))
         return iLookGood
