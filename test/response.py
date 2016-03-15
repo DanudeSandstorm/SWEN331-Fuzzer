@@ -31,11 +31,9 @@ class Response(object):
                  417:"Client Error: Expectation Failed", 500:"Expectation Failed: Internal Server Error", 501:"Expectation Failed: Not Implemented",
                  502:"Expectation Failed: Bad Gateway", 503:"Expectation Failed: Service Unavailable",
                  504:"Expectation Failed: Gateway Timeout", 505:"Expectation Failed: HTTP Version Not Supported"}
-        response = self.browser.open(url)
-        return str(response.code) + " - " + codes[response.code]
 
-if __name__ == '__main__':
-    url = ""
-    resObj = Response(mechanize.Browser(), 500)
-    print(resObj.responseTimer(url))
-    print(resObj.responseType(url))
+        try:
+            code = self.browser.open(url).code
+            return str(code) + " - " + codes[code]
+        except mechanize.HTTPError as e:
+            return str(e)
