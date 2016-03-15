@@ -1,14 +1,14 @@
 import re
 
 class Sanitize(object):
-    def __init__(self):
-        print 'TODO'
+    input = None
+    def __init__(self, input):
+        self.input = input
 
-    def sanitized(self, inputs):
-        badData = ['<', '>', '"', "'"]  # add more to this
+    def sanitized(self, input):
+        badData = ['<', '>', '"', "'", "/"]  # add more to this
         while '&' in input:
-            pattern = re.compile('&\w+;')
-            #matched = re.search(r'&\w+;', input)
+            pattern = re.compile('&[#]\w+;|&\w+;')
             if pattern.search(input):
                 if len(pattern.search(input).group()) < 4:
                     return False
@@ -19,7 +19,13 @@ class Sanitize(object):
             return False
         return True
 
+
+    def toString(self):
+        returnMe = "Input: " + self.input + "\n"
+        returnMe += "Sanitized: " + str(self.sanitized(self.input))
+        return returnMe
+
 if __name__ == '__main__':
-    sanitizer = Sanitize()
-    input = '&#88;'
-    print(sanitizer.sanitized(input))
+    input = '&#888;&#455;'
+    sanitizer = Sanitize(input)
+    print(sanitizer.toString())
