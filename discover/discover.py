@@ -1,6 +1,4 @@
 import os
-import sys
-import mechanize
 
 from guess import Guess
 from crawl import Crawl
@@ -11,44 +9,12 @@ class Discover(object):
 
     browser = None
 
-    def __init__(self, args):
+    def __init__(self, args, browser):
         path = os.getcwd()
         base_url = args.url
         common_words = os.path.join(path, args.common_words)
 
-        if not base_url.endswith('/'):
-            base_url = base_url + '/'
-
-        #Instantiate browser session
-        self.browser = mechanize.Browser()
-
-        #Login
-        if args.custom_auth != None:
-            print 'Attempting to log in...'
-        if args.custom_auth.lower() == 'dvwa':
-            try:
-                self.browser.open(base_url)
-                self.browser.select_form(nr=0)
-                self.browser.form['username'] = 'admin'
-                self.browser.form['password'] = 'password'
-                self.browser.submit()
-            except mechanize.FormNotFoundError:
-                pass
-            except:
-                print 'Website not found. Check to see if url is valid.'
-                sys.exit()
-        elif args.custom_auth.lower() == 'bwapp':
-            try:
-                self.browser.open(base_url)
-                self.browser.select_form(nr=0)
-                self.browser.form['login'] = 'bee'
-                self.browser.form['password'] = 'bug'
-                self.browser.submit()
-            except mechanize.FormNotFoundError:
-                pass
-            except:
-                print 'Website not found. Check to see if url is valid.'
-                sys.exit()
+        self.browser = browser
 
         print 'Throwing up cookies...'
         cookies = self.fillCookieJar()
