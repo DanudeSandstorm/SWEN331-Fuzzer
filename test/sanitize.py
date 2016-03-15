@@ -1,9 +1,9 @@
 import re
 
 class Sanitize(object):
-    input = None
-    def __init__(self, input):
-        self.input = input
+
+    def __init__(self):
+        pass
 
     def sanitized(self, input):
         badData = ['<', '>', '"', "'", "/"]  # add more to this
@@ -21,12 +21,12 @@ class Sanitize(object):
         return True
 
 
-    def toString(self):
-        returnMe = "Input: " + self.input + "\n"
-        returnMe += "Sanitized: " + str(self.sanitized(self.input))
+    def toString(self, input):
+        returnMe = "Input: " + input + "\n"
+        returnMe += "Sanitized: " + str(self.sanitized(input))
         return returnMe
 
 if __name__ == '__main__':
     input = '&#888;&#455;'
-    sanitizer = Sanitize(input)
-    print(sanitizer.toString())
+    sanitizer = Sanitize()
+    print(sanitizer.toString(input))

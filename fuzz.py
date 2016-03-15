@@ -59,7 +59,7 @@ def main():
             pass
         except:
             print 'Website not found. Check to see if url is valid.'
-            sys.exit()    
+            sys.exit()
 
     if args.command == 'discover':
         Discover(args, browser)
