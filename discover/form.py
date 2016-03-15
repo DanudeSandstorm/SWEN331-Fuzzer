@@ -15,6 +15,9 @@ class Form(object):
         iLookGood = "\tForm Name: " + self.name + "\n"
         if hasattr(self.form, 'controls'):
             iLookGood += '\tForm Control:\n'
-            for item in self.form.controls:
-                iLookGood += '\t\t' + str(item) + '\n'
+            for control in self.form.controls:
+                iLookGood += '\t\t' + str(control) + '\n'
+                if control.type == "select":
+                    for item in control.items:
+                        print " name=%s values=%s" % (item.name, str([label.text  for label in item.get_labels()]))
         return iLookGood
