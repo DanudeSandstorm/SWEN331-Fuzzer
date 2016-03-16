@@ -62,7 +62,7 @@ class Test(object):
         else:
             print "What is random? It isn't true and it isn't false... uh oh..."
 
-        printer = printMe
+        self.printer = printMe
 
     def toString():
-        return printer
+        return self.printer

