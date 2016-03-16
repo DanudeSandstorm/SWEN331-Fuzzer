@@ -17,6 +17,7 @@ Preconditions...
   1. In the terminal cd into the projects directory
   2. Enter "python fuzz.py discover -h" to see all available options
 
+Discover:
 To run the fuzzer on DVWA:
   1. In step 2 replace [path/file_name] with the path and file name that you wish to use for guessing URLs
   2. Enter "python fuzz.py discover 'http://127.0.0.1/dvwa/' --common-words [path/file_name] --custom-auth 'dvwa'"
@@ -25,3 +26,17 @@ To run the fuzzer on bWapp:
   1. In step 2 replace [path/file_name] with the path and file name that you wish to use for guessing URLs
   2. Enter "python fuzz.py discover 'http://127.0.0.1/bWapp/' --common-words [path/file_name] --custom-auth 'bwapp'"
 
+Test:
+To run the fuzzer on DVWA:
+  1. In step 2 replace the first [path/file_name] with the path and file name for fuzz vectors and replace the
+  second [path/file_name] with the path and file name for the technical words list (this list should be
+  newline-delimited.
+  2. Enter "python fuzz.py test 'http://127.0.0.1/dvwa/' --custom-auth 'dvwa' --vectors [path/file_name]
+                --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"
+
+To run the fuzzer on bWapp:
+  1. In step 2 replace the first [path/file_name] with the path and file name for fuzz vectors and replace the
+  second [path/file_name] with the path and file name for the technical words list (this list should be
+  newline-delimited.
+  2. Enter "python fuzz.py test 'http://127.0.0.1/bWapp/' --custom-auth 'bwapp' --vectors [path/file_name]
+                --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"

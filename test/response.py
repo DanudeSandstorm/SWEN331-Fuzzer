@@ -13,7 +13,8 @@ class Response(object):
         timeStart = lambda: int(round(time.time() * 1000))
         self.browser.open(url)
         timeEnd = lambda: int(round(time.time() * 1000))
-        return timeEnd()-timeStart()
+        difference = timeEnd()-timeStart()
+        return "Response Timer: " + str(difference)
 
     def responseType(self, url):
         codes = {100:"Informational: Continue", 101:"Informational: Switching Protocols",
