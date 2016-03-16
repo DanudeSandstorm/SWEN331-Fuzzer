@@ -15,4 +15,15 @@ class Leakage(object):
             sys.exit()
 
     def findLeaks(self, url):
-        self.browser.open(url)
+        foundTW = []
+        response = self.browser.open(url)
+        book = response.read()
+        for tw in self.techWords:
+            if tw in book:
+                foundTW.append(tw)
+        if len(foundTW) < 1:
+            return "No technical words were found for " + url
+        else:
+            returmMe = "This is a list of technical words for " + url + ": - "
+            for tw in foundTW:
+                returnMe += tw + " - "
