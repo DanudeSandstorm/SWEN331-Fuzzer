@@ -12,7 +12,7 @@ class Test(object):
         sensitive = os.path.join(path, args.sensitive)
         vectors = os.path.join(path, args.vectors)
 
-        random = args.random
+        rando = args.random
 
         # TODO Sanitize
         sanitize = Sanitize(browser, vectors)
@@ -20,7 +20,7 @@ class Test(object):
         leakage = Leakage(browser, sensitive)
         resObj = Response(browser, args.slow)
 
-        if random == False:
+        if rando == False:
             for url in urlMap:
                 printMe = "Information regarding " + url + ":\n"
                 printMe += leakage.findLeaks(url) + "\n"
@@ -40,7 +40,7 @@ class Test(object):
                         printMe += resObj.responseType(urlAndVector) + "\n"
                         printMe += resObj.responseTimer(urlAndVector) + "\n"
 
-        elif random == True:
+        elif rando == True:
             key = random.sample(urlMap,1)
             input = random.sample(urlMap[key][0],1)
             form = random.sample(urlMap[key][1],1)
