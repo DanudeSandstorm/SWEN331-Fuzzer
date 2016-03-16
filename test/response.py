@@ -14,7 +14,7 @@ class Response(object):
         self.browser.open(url)
         timeEnd = lambda: int(round(time.time() * 1000))
         difference = timeEnd()-timeStart()
-        if difference < maxTime:
+        if difference < self.maxTime:
             return "Response Timer: " + str(difference) + " which is within the threshold."
         return "Response Timer: " + str(difference) + " which is outside of the threshold."
 

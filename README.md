@@ -28,15 +28,16 @@ To run the fuzzer on bWapp:
 
 Test:
 To run the fuzzer on DVWA:
-  1. In step 2 replace the first [path/file_name] with the path and file name for fuzz vectors and replace the
-  second [path/file_name] with the path and file name for the technical words list (this list should be
-  newline-delimited.
-  2. Enter "python fuzz.py test 'http://127.0.0.1/dvwa/' --custom-auth 'dvwa' --vectors [path/file_name]
-                --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"
+  1. In step 2 replace the first [path/file_name] with the path and file name containing guesses, replace the
+  second[path/file_name] with the path and file name for the technical words list should be newline-delimited.
+  2. Enter "python fuzz.py test 'http://127.0.0.1/dvwa/' --custom-auth 'dvwa' --common-words [path/file_name]
+            --vectors test/vectors.txt --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"
+  3. The following arguments are not required: custom-auth, common-words, random, slow
 
 To run the fuzzer on bWapp:
-  1. In step 2 replace the first [path/file_name] with the path and file name for fuzz vectors and replace the
-  second [path/file_name] with the path and file name for the technical words list (this list should be
-  newline-delimited.
-  2. Enter "python fuzz.py test 'http://127.0.0.1/bWapp/' --custom-auth 'bwapp' --vectors [path/file_name]
-                --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"
+  1. In step 2 replace the first [path/file_name] with the path and file name containing guesses, replace the
+  second[path/file_name] with the path and file name for the technical words list should be newline-delimited.
+  2. Enter "python fuzz.py test 'http://127.0.0.1/bWapp/' --custom-auth 'bwapp' --common-words [path/file_name]
+            --vectors test/vectors.txt --sensitive [path/file_name] --random True/False --slow Int(milliseconds)"
+  3. The following arguments are not required: custom-auth, common-words, random, slow
+
