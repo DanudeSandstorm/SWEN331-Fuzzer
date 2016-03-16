@@ -21,10 +21,11 @@ class Leakage(object):
         for tw in self.techWords:
             if tw in book:
                 foundTW.append(tw)
-        if len(foundTW) < 1:
-            return "No technical words were found for " + url
-        else:
-            returnMe = "This is a list of technical words for " + url + ": - "
+
+        if len(foundTW) >= 1:
+            returnMe = "List of technical words:\n"
             for tw in foundTW:
-                returnMe += tw + " - "
-        return returnMe
+                returnMe += tw + ", "
+            return returnMe
+
+        return "No technical words were found "

@@ -6,6 +6,7 @@ from parse_url import ParseURL
 from form import Form
 
 class Discover(object):
+    urlInputMap = {}
 
     def __init__(self, args, browser):
         base_url = args.url
@@ -27,10 +28,12 @@ class Discover(object):
 
         urlParser = ParseURL()
         print 'Parsing urls for inputs...'
-        urlInputMap = urlParser.parse(found_urls)
+        self.urlInputMap = urlParser.parse(found_urls)
 
         print cookies
-        print self.makeAString(browser, urlInputMap)
+
+    def urlInputMap(self):
+        return self.urlInputMap
 
     def fillCookieJar(self, browser):
         cookieJar =  "\nCookies:\n"
@@ -40,7 +43,7 @@ class Discover(object):
             count += 1
         return cookieJar
 
-    def makeAString(self, browser, urlInputMap):
+    def toString(self, browser, urlInputMap):
         count = 1
         sexyString = ""
         for url in urlInputMap:
