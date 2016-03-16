@@ -9,15 +9,15 @@ class ParseURL(object):
             input = url.partition('?')[-1].rpartition('=')[0]
             if ';' in input:
                 isInput = True
-                newInput = ""
-                for c in input:
-                    if c == '=':
+                urlInputMap[url] = []
+                input = ''
+                for char in input:
+                    if char == '=':
                         isInput = False
+                        urlInputMap[url].append(input)
+                        input = ''
                     if isInput:
-                        newInput += c
-                    if c == ';':
+                        input += c
+                    if char == ';':
                         isInput = True
-                        newInput += " and "
-                input = newInput
-            urlInputMap[url] = input
         return urlInputMap

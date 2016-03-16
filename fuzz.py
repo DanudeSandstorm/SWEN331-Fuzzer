@@ -62,12 +62,13 @@ def main():
             sys.exit()
 
     discover = Discover(args, browser)
-    urlInputMap = discover.urlInputMap()
+    urlMap = discover.returnUrlMap()
     
     if args.command == 'discover':
-        print discover.makeAString(browser, urlInputMap)
+        print discover.toString()
     elif args.command == 'test':
-        Test(args, browser, urlInputMap)
+        Test(args, browser, urlMap)
+        print test.toString()
 
 if __name__ == '__main__':
     main()
