@@ -28,6 +28,7 @@ def main():
     t_parser.add_argument('url', type=str)
     t_parser.register(t_parser, 'type' 'bool', str2bool)
     t_parser.add_argument('--custom-auth', type=str, required=False, metavar='', help='Signal that the fuzzer should use hard-coded authentication for a specific application (e.g. dvwa).')
+    t_parser.add_argument('--common-words', type=str, required=False, metavar='', help='Newline-delimited file of common words to be used in page guessing and input guessing.')
     t_parser.add_argument('--vectors', type=str, required=True, metavar='', help='REQUIRED Newline-delimited file of common exploits to vulnerabilities.')
     t_parser.add_argument('--sensitive', type=str, required=True, metavar='', help='REQUIRED Newline-delimited file data that should never be leaked.\nIt\'s assumed that this data is in the application\'s database (e.g. test data), but is not reported in any response.')
     t_parser.add_argument('--random', type=bool, default=False, metavar='', help='When off, try each input to each page systematically.\nWhen on, choose a random page, then a random input field and test all vectors. Default: false.')
@@ -67,7 +68,7 @@ def main():
     if args.command == 'discover':
         print discover.toString()
     elif args.command == 'test':
-        Test(args, browser, urlMap)
+        test = Test(args, browser, urlMap)
         print test.toString()
 
 if __name__ == '__main__':

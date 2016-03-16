@@ -16,7 +16,7 @@ class Test(object):
 
         rando = args.random
 
-        sanitize = Sanitize(browser, vectors)
+        sanitize = Sanitize(browser)
         leakage = Leakage(browser, sensitive)
         resObj = Response(browser, args.slow)
 
@@ -31,38 +31,47 @@ class Test(object):
                 for v in vectors:
 
                     for form in urlMap[url][1]:
-                        printMe += "Form Inputs Sanitized: " + str(sanitize.isFormSanitized())
+                        printMe += "Form Inputs Sanitized: " + str(sanitize.isFormSanitized(url, form, v)) + "\n"
 
                     for input in urlMap[url][0]:
                         urlAndInput = url + input + "="
                         urlAndVector = urlAndInput + v
                         printMe += "URL Inputs Sanitized: " + str(sanitize.isURLSanitized(urlAndVector)) + "\n"
-                        printMe = "Information regarding " + url + ":\n"
+                        printMe += "Information regarding " + url + ":\n"
                         printMe += leakage.findLeaks(urlAndVector) + "\n"
                         printMe += resObj.responseType(urlAndVector) + "\n"
                         printMe += resObj.responseTimer(urlAndVector) + "\n"
 
         elif rando == True:
-            key = random.sample(urlMap,1)
-            input = random.sample(urlMap[key][0],1)
-            form = random.sample(urlMap[key][1],1)
-            vector = random.sample(vectors,1)
+            input = None
+            form = None
+
+            key = random.sample(urlMap,1)[0]
+
             printMe += "Information regarding " + key + ":\n"
             printMe += leakage.findLeaks(key) + "\n"
             printMe += resObj.responseType(key) + "\n"
             printMe += resObj.responseTimer(key) + "\n"
 
-            #printMe += "Form Inputs Sanitized: " + str(sanitize.isFormSanitized())
-            urlAndVector = key+input+"="+vector
-            printMe += "URL Inputs Sanitized: " + str(sanitize.isURLSanitized(urlAndVector)) + "\n"
-            printMe += "Information regarding " + urlAndVector + ":\n"
-            printMe += leakage.findLeaks(urlAndVector) + "\n"
-            printMe += resObj.responseType(urlAndVector) + "\n"
-            printMe += resObj.responseTimer(urlAndVector) + "\n"
+            vector = random.sample(vectors, 1)[0]
+
+            if len(urlMap[key][0]) >= 1:
+                input = random.choice(urlMap[key][0])
+                urlAndVector = key+input+"="+vector
+                printMe += "URL Inputs Sanitized: " + str(sanitize.isURLSanitized(urlAndVector)) + "\n"
+                printMe += "Information regarding " + urlAndVector + ":\n"
+                printMe += leakage.findLeaks(urlAndVector) + "\n"
+                printMe += resObj.responseType(urlAndVector) + "\n"
+                printMe += resObj.responseTimer(urlAndVector) + "\n"
+
+            if len(urlMap[key][1]) >= 1:    
+                form = random.choice(urlMap[key][1])
+                printMe += "Form Inputs Sanitized: " + str(sanitize.isFormSanitized(key, form, vector)) + "\n"
+
         else:
             print "What is random? It isn't true and it isn't false... uh oh..."
 
         self.printer = printMe
 
-    def toString():
+    def toString(self):
         return self.printer

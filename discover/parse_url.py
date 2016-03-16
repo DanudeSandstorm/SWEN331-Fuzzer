@@ -6,7 +6,7 @@ class ParseURL(object):
     def parse(self, urls):
         urlInputMap = {}
         for url in urls:
-            input = url.partition('?')[-1].rpartition('=')[0]
+            input = url.partition('?')[-1]
             urlInputMap[url] = []
             if ';' in input:
                 isInput = True
@@ -15,9 +15,9 @@ class ParseURL(object):
                     if char == '=':
                         isInput = False
                         urlInputMap[url].append(newInput)
-                        newinput = ''
                     if isInput:
                         newInput += char
                     if char == ';':
                         isInput = True
+                        newInput = ''
         return urlInputMap

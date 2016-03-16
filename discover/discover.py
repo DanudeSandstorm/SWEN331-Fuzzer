@@ -14,7 +14,6 @@ class Discover(object):
         self.browser = browser
         base_url = args.url
         path = os.getcwd()
-        common_words = os.path.join(path, args.common_words)
 
         print 'Throwing up cookies...'
         self.cookies = self.fillCookieJar()
@@ -22,13 +21,14 @@ class Discover(object):
         crawler = Crawl(browser, base_url)
         print 'Crawling for urls...'
         crawled_urls = crawler.crawl()
-
-        # guesser = Guess(browser, common_words)
-        # print 'Guessing urls...'
-        # guessed_urls = guesser.guess(crawled_urls)
-
-        # found_urls = list(set(crawled_urls) - set(guessed_urls))
         found_urls = crawled_urls
+
+        if args.common_words:
+            common_words = os.path.join(path, args.common_words)
+            guesser = Guess(browser, common_words)
+            print 'Guessing urls...'
+            guessed_urls = guesser.guess(crawled_urls)
+            found_urls = list(set(crawled_urls) - set(guessed_urls))
 
         urlParser = ParseURL()
         print 'Parsing urls for inputs...'
