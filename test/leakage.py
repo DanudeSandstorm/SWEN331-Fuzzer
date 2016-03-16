@@ -24,6 +24,7 @@ class Leakage(object):
         if len(foundTW) < 1:
             return "No technical words were found for " + url
         else:
-            returmMe = "This is a list of technical words for " + url + ": - "
+            returnMe = "This is a list of technical words for " + url + ": - "
             for tw in foundTW:
                 returnMe += tw + " - "
+        return returnMe
