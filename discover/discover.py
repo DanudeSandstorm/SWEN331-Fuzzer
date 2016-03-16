@@ -33,7 +33,6 @@ class Discover(object):
         urlParser = ParseURL()
         print 'Parsing urls for inputs...'
         urlInputMap = urlParser.parse(found_urls)
-        print urlInputMap
         for url in urlInputMap:
             self.urlMap[url] = []
             self.urlMap[url].append(urlInputMap[url])
@@ -72,5 +71,5 @@ class Discover(object):
         forms = []
         browser.open(url)
         for f in browser.forms():
-            forms.append(form)
+            forms.append(f)
         return forms
